@@ -10,6 +10,7 @@ class EnterController extends AbstractActionController {
 	protected $apartmentTable;
 	protected $roomTable;
 	public function indexAction() {
+		
 		$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
 		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		$vars = array (
