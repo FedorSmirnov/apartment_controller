@@ -5,19 +5,47 @@ namespace Apartment\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Zend\Session\Container;
 
 class EnterController extends AbstractActionController {
 	protected $apartmentTable;
 	protected $roomTable;
 	public function indexAction() {
-		
 		$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
+		
+		// Holen der Session variablen und ueberpruefen des User Status
+		$user_session = new Container ( 'user_status' );
+		$logged = $user_session->logged;
+		$admin = $user_session->admin;
+		
+		// Rausschmeissen wenn nicht eingeloggt
+		if ($logged != "true") {
+			$this->redirect ()->toRoute ( 'login' );
+		}
+		
+		// Wenn nicht admin und in der falschen Wohnung auch raus
+		if ($admin != "true") {
+			$apartment_id = $user_session->apartment_id;
+			if ($apartment_id != $id) {
+				$this->redirect ()->toRoute ( 'login' );
+			}
+		}
+		
+		
+		
 		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		$vars = array (
 				'apartment' => $apartment,
-				'rooms' => $this->getRoomTable ()->getApartmentRooms ( $apartment->id ) 
+				'rooms' => $this->getRoomTable ()->getApartmentRooms ( $apartment->id ),
+				'admin' => $admin 
 		);
 		return new ViewModel ( $vars );
+	}
+	public function logoutAction() {
+		// Die Session Variablen loeschen und zu dem Login Bildschirm zurueck
+		$user_session = new Container('user_status');
+		$user_session->getManager()->getStorage()->clear('user_status');
+		$this->redirect ()->toRoute ( 'login' );
 	}
 	public function getApartmentTable() {
 		if (! $this->apartmentTable) {
@@ -183,37 +211,33 @@ class EnterController extends AbstractActionController {
 	}
 	
 	// Funktion um alle Heizungen/Klimaanlagen auszuschalten
-	public function allTempOffAction(){
+	public function allTempOffAction() {
 		// Post daten auslesen
-		$id = $_POST['id'];
-		$temp_verbrauch = $_POST['temp_verbrauch'];
+		$id = $_POST ['id'];
+		$temp_verbrauch = $_POST ['temp_verbrauch'];
 		
-		$apartment = $this->getApartmentTable()->getApartment($id);
+		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		
 		// Gesamtverbrauch herabsetzen
 		$apartment->power = $apartment->power - $temp_verbrauch;
-		$this->getApartmentTable()->saveApartment($apartment);
+		$this->getApartmentTable ()->saveApartment ( $apartment );
 		
 		// Tempverbrauch und Solltemperatur in den Zimmern anpassen
-		$rooms = $this->getRoomTable()->getApartmentRooms($id);
+		$rooms = $this->getRoomTable ()->getApartmentRooms ( $id );
 		
-		foreach ($rooms as $room){
+		foreach ( $rooms as $room ) {
 			
 			$room->temperature = $room->temperature_outside;
 			$room->power_temperature = 0;
-			$this->getRoomTable()->saveRoom($room);
-			
+			$this->getRoomTable ()->saveRoom ( $room );
 		}
 		
-		$result = new JsonModel(array(
-			
-				'gesamtverbrauch' => $apartment->power
+		$result = new JsonModel ( array (
 				
-				
-		));
+				'gesamtverbrauch' => $apartment->power 
+		) );
 		
 		return $result;
-		
 	}
 	
 	// Funktion aktualisiert den Stromverbrauch der Lichter einer Wohnung

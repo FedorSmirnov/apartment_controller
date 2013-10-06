@@ -387,7 +387,8 @@ $this->headTitle ( $title );
 			
 			?>
 			<td id="text_temp_gesamt"><?php echo $sum?></td>
-			<td id="button_temp_all_off"><button>Alle Heizungen/Klimaanlagen ausschalten</button></td>
+			<td id="button_temp_all_off"><button>Alle Heizungen/Klimaanlagen
+					ausschalten</button></td>
 
 		</tr>
 
@@ -419,11 +420,12 @@ $this->headTitle ( $title );
 				<?php echo $room->temperature_outside?>
 			</td>
 			<!-- Energieverbrauch -->
-			<td class="temp_verbrauch" id=<?php echo "temp_verbrauch_" . $counter?>><?php 
+			<td class="temp_verbrauch"
+				id=<?php echo "temp_verbrauch_" . $counter?>><?php
 			
-			if($room->power_temperature == null){
+			if ($room->power_temperature == null) {
 				$verbrauch = 0;
-			}else{
+			} else {
 				$verbrauch = $room->power_temperature;
 			}
 			echo $verbrauch?></td>
@@ -485,6 +487,23 @@ $this->headTitle ( $title );
 		<?php endforeach;?>
 
 	</table>
+
+	<br>
+	<hr>
+	<?php
+	
+if ($admin == "true") {
+		
+		echo '<a style="float: left"
+		href=' . $this->url ( 'apartment' ) . '>Zurueck zur Uebersicht</a>';
+	}
+	?>
+	
+	
+
+	<a style="float: right"
+		href=<?php echo $this->url('enter', array('action' => 'logout'))?>>Ausloggen</a>
+	<br>
 
 
 </body>

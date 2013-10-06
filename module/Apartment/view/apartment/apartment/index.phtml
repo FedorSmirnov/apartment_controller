@@ -38,7 +38,7 @@ foreach ( $apartments as $apartment ) :
 		<td><?php echo $apartment->adress?></td>
 		<td><?php echo $apartment->floor?></td>
 		<td><?php echo $apartment->room_num?></td>
-		<td> <a
+		<td><a
 			href="<?php echo $this->url('apartment', array('action' => 'delete', 'id' => $apartment->id));?>">Datensatz
 				loeschen</a><br> <a
 			href="<?php echo $this->url('enter', array('id' => $apartment->id));?>">Die
@@ -54,6 +54,13 @@ endforeach
 
 
 </table>
+<br>
+<hr>
+
+<a
+	href=<?php echo $this->url('apartment', array('action' => 'logout'))?>
+	style="float: right">Ausloggen</a>
+<br>
 
 
 </html>

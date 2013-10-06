@@ -7,16 +7,34 @@ use Zend\View\Model\ViewModel;
 use Apartment\Model\Apartment;
 use Apartment\Form\ApartmentForm;
 use Apartment\Model\Room;
+use Zend\Session\Container;
 
 class ApartmentController extends AbstractActionController {
 	protected $apartmentTable;
 	protected $roomTable;
 	public function indexAction() {
+		
+		// Bauen des Containers und überprüfen der Session Einstellungen
+		$user_session = new Container ( 'user_status' );
+		$logged = $user_session->logged;
+		$admin = $user_session->admin;
+		
+		if ($logged != "true" || $admin != "true") {
+			$this->redirect ()->toRoute ( 'login' );
+		}
+		
 		return new ViewModel ( 
 
 		array (
 				'apartments' => $this->getApartmentTable ()->fetchAll () 
 		) );
+	}
+	public function logoutAction() {
+		
+		// Die Session Variablen loeschen und zurueck zum Login
+		$user_session = new Container ( 'user_status' );
+		$user_session->getManager ()->getStorage ()->clear ( 'user_status' );
+		$this->redirect ()->toRoute ( 'login' );
 	}
 	public function addAction() {
 		$form = new ApartmentForm ();
@@ -33,8 +51,8 @@ class ApartmentController extends AbstractActionController {
 			if ($form->isValid ()) {
 				
 				$apartment->exchangeArray ( $form->getData () );
-				#Beruecksichtigen des Heizungsverbrauchs
-				$apartment->power = 2*20 + 20*($apartment->room_num);
+				// eruecksichtigen des Heizungsverbrauchs
+				$apartment->power = 2 * 20 + 20 * ($apartment->room_num);
 				$id = $this->getApartmentTable ()->saveApartment ( $apartment );
 				
 				$this->makeRooms ( $apartment, $id );
@@ -108,7 +126,7 @@ class ApartmentController extends AbstractActionController {
 				'power_temperature' => 20,
 				'power_device' => 0,
 				'name' => "Kueche",
-				'temperature_outside'=>15 
+				'temperature_outside' => 15 
 		);
 		
 		$room = new Room ();
@@ -125,7 +143,7 @@ class ApartmentController extends AbstractActionController {
 				'power_temperature' => 20,
 				'power_device' => 0,
 				'name' => "Bad",
-				'temperature_outside'=>15
+				'temperature_outside' => 15 
 		);
 		
 		$room->exchangeArray ( $data );
@@ -143,7 +161,7 @@ class ApartmentController extends AbstractActionController {
 					'power_temperature' => 20,
 					'power_device' => 0,
 					'name' => "Zimmer " . $i,
-					'temperature_outside'=>15
+					'temperature_outside' => 15 
 			);
 			
 			$room->exchangeArray ( $data );
