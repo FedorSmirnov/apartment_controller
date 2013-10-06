@@ -4,6 +4,7 @@ namespace Apartment;
 
 return array (
 		
+		
 		'controllers' => array (
 				
 				'invokables' => array (
