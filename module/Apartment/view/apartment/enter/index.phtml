@@ -40,7 +40,7 @@
 		//Funktion, mit der das Anschalten eines Lichts gemacht wird
 		$(".button_light").click(function(){
 
-
+			
 			var index = $(".button_light").index(this);
 			var buttonId = "#button_light_" + index;
 			var nameId = "#room_name_light_" + index;
@@ -58,7 +58,7 @@
 			$.ajax({
 
 				type:"POST",
-				url: "/enter/toggleLight",
+				url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
 				data:myData,
 				success:function(data){
 
@@ -92,7 +92,7 @@
 			
 			$.ajax({
 					type:"POST",
-					url:"/enter/allLightsOut",
+					url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allLightsOut",
 					data:myData,
 					success:function(data){
 
@@ -141,7 +141,7 @@
 			$.ajax({
 
 				type:"POST",
-				url:"/enter/changeTemp",
+				url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/changeTemp",
 				data:myData,
 				success:function(data){
 
@@ -180,7 +180,7 @@
 			$.ajax({
 
 				type:"POST",
-				url:"/enter/allTempOff",
+				url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allTempOff",
 				data:myData,
 				success:function(data){
 					
