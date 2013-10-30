@@ -5,7 +5,8 @@ return array (
 				
 				'invokables' => array (
 						
-						'ApartmentRest\Controller\ApartmentRest' => 'ApartmentRest\Controller\ApartmentRestController' 
+						'ApartmentRest\Controller\ApartmentRest' => 'ApartmentRest\Controller\ApartmentRestController',
+						'ApartmentRest\Controller\LoginRest' => 'ApartmentRest\Controller\LoginRestController' 
 				) 
 		),
 		
@@ -33,11 +34,26 @@ return array (
 												'controller' => 'ApartmentRest\Controller\ApartmentRest' 
 										) 
 								) 
-						) 
-				)
-				 
+						),
+						
+						'login-rest' => array (
+								
+								'type' => 'segment',
+								'options' => array (
+										
+										'route' => '/login-rest',
+										'defaults' => array (
+												
+												'controller' => 'ApartmentRest\Controller\LoginRest' 
+										) 
+								)
+								 
+						)
+						 
+				) 
 		)
 		 
-);
+)
+;
 
 ?>
