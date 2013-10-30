@@ -43,6 +43,7 @@ class AlbumTable {
 				throw new \Exception ( "Album id does not exist." );
 			}
 		}
+		return $id;
 	}
 	public function deleteAlbum($id) {
 		$this->tableGateway->delete ( array (
