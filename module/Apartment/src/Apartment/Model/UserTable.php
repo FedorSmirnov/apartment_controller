@@ -14,16 +14,26 @@ class UserTable extends TableGateway {
 				
 				'name' => $name,
 				'password' => $password 
-		)
-		 );
+		) );
 		
-		$row = $rowset->current();
+		$row = $rowset->current ();
 		
-		if(!$row){
+		if (! $row) {
 			return false;
-		}else{
+		} else {
 			
 			return $row;
+		}
+	}
+	// Notwendig für das testen
+	public function randomUser($admin) {
+		$rowSet = $this->tableGateway->select ();
+		
+		foreach ( $rowSet as $user ) {
+			
+			if ($user->admin == $admin) {
+				return $user;
+			}
 		}
 	}
 }
