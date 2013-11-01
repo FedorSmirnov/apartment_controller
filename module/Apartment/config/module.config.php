@@ -4,18 +4,17 @@ namespace Apartment;
 
 return array (
 		
-		
 		'controllers' => array (
 				
 				'invokables' => array (
 						
 						'Apartment\Controller\Apartment' => 'Apartment\Controller\ApartmentController',
 						'Apartment\Controller\Login' => 'Apartment\Controller\LoginController',
-						'Apartment\Controller\Enter' => 'Apartment\Controller\EnterController' 
+						'Apartment\Controller\Enter' => 'Apartment\Controller\EnterController',
+						'Apartment\Controller\EnterLoc' => 'Apartment\Controller\EnterLocController' 
 				) 
 		),
 		'view_manager' => array (
-				
 				
 				'template_path_stack' => array (
 						
@@ -71,9 +70,8 @@ return array (
 										'constraints' => array (
 												
 												'id' => '[0-9]+',
-												'action' => '[a-zA-Z][a-zA-Z0-9-_]*'
-										)
-										,
+												'action' => '[a-zA-Z][a-zA-Z0-9-_]*' 
+										),
 										
 										'defaults' => array (
 												
@@ -81,6 +79,27 @@ return array (
 												'action' => 'index' 
 										) 
 								) 
+						),
+						
+						'enter-loc' => array (
+								
+								'type' => 'segment',
+								'options' => array (
+										
+										'route' => '/enter-loc[/:action][/:id]',
+										'constraints' => array (
+												
+												'id' => '[0-9]+',
+												'action' => '[a-zA-Z][a-zA-Z0-9-_]*' 
+										),
+										
+										'defaults' => array (
+												
+												'controller' => 'Apartment\Controller\EnterLoc',
+												'action' => 'index' 
+										) 
+								)
+								 
 						)
 						 
 				)
