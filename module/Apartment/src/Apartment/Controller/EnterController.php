@@ -19,7 +19,7 @@ class EnterController extends AbstractActionController {
 		$admin = $user_session->admin;
 		
 		// Rausschmeissen wenn nicht eingeloggt
-		if ($logged != "true") {
+		if ($logged != "funktional") {
 			$this->redirect ()->toRoute ( 'login' );
 		}
 		

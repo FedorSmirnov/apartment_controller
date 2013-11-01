@@ -19,7 +19,7 @@ class ApartmentController extends AbstractActionController {
 		$logged = $user_session->logged;
 		$admin = $user_session->admin;
 		
-		if ($logged != "true" || $admin != "true") {
+		if ($logged == "false" || $admin != "true") {
 			$this->redirect ()->toRoute ( 'login' );
 		}
 		
