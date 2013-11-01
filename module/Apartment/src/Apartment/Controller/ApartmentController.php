@@ -158,7 +158,7 @@ class ApartmentController extends AbstractActionController {
 					'power_light' => 0,
 					'power_temperature' => 20,
 					'power_device' => 0,
-					'name' => "Zimmer " . $i,
+					'name' => "Zimmer_" . $i,
 					'temperature_outside' => 15 
 			);
 			
