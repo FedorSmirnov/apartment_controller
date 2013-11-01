@@ -15,10 +15,10 @@ class RoomTable {
 		$resultSet = $this->tableGateway->select ( array (
 				'apartment_id' => $id 
 		) );
+		
 		return $resultSet;
 	}
 	public function getRoom($id, $name) {
-		
 		$id = ( int ) $id;
 		
 		$rowSet = $this->tableGateway->select ( array (
@@ -30,6 +30,8 @@ class RoomTable {
 			
 			return false;
 		}
+		
+		$row->prepareData ();
 		return $row;
 	}
 	public function saveRoom(Room $room) {
@@ -41,8 +43,8 @@ class RoomTable {
 				'power_temperature' => $room->power_temperature,
 				'power_device' => $room->power_device,
 				'light' => $room->light,
-				'temperature' => $room->temperature, 
-				'temperature_outside' => $room->temperature_outside
+				'temperature' => $room->temperature,
+				'temperature_outside' => $room->temperature_outside 
 		);
 		
 		if (! $this->getRoom ( ( int ) $room->apartment_id, $room->name )) {
