@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Zend\Session\Container;
+use Apartment\SharedFunc\SharedFunctions;
 
 class EnterController extends AbstractActionController {
 	protected $apartmentTable;
@@ -31,8 +32,6 @@ class EnterController extends AbstractActionController {
 			}
 		}
 		
-		
-		
 		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		$vars = array (
 				'apartment' => $apartment,
@@ -42,10 +41,8 @@ class EnterController extends AbstractActionController {
 		return new ViewModel ( $vars );
 	}
 	public function logoutAction() {
-		// Die Session Variablen loeschen und zu dem Login Bildschirm zurueck
-		$user_session = new Container('user_status');
-		$user_session->getManager()->getStorage()->clear('user_status');
-		$this->redirect ()->toRoute ( 'login' );
+		$sf = new SharedFunctions ();
+		$sf->logOut ( $this );
 	}
 	public function getApartmentTable() {
 		if (! $this->apartmentTable) {
@@ -104,7 +101,7 @@ class EnterController extends AbstractActionController {
 			$status = "An";
 		} else {
 			
-			// icht ist an, man muss es ausmachen und den Verbrauch verkleinern
+			// Licht ist an, man muss es ausmachen und den Verbrauch verkleinern
 			
 			$room->light = 0;
 			$room->power_light = $power_light - 10;
@@ -120,12 +117,15 @@ class EnterController extends AbstractActionController {
 		$apartment->power = $apartment->power + $powerSum;
 		$this->getApartmentTable ()->saveApartment ( $apartment );
 		
+		
+		
 		$result = new JsonModel ( array (
 				
 				'button' => $button,
 				'status' => $status,
 				'power_sum' => $powerSum,
-				'power_apartment' => $apartment->power 
+				'power_apartment' => $apartment->power,
+				'room_power_sum' => $room->getPowerSum() 
 		) );
 		
 		return $result;
@@ -204,7 +204,8 @@ class EnterController extends AbstractActionController {
 				'name' => "Name",
 				'gesamtverbrauch' => $apartment->power,
 				'tempverbrauch_zimmer' => $verbrauch,
-				'tempverbrauch_wohnung' => $this->updateTempPower ( $id ) 
+				'tempverbrauch_wohnung' => $this->updateTempPower ( $id ),
+				'room_power_sum' => $room->getPowerSum()
 		) );
 		
 		return $result;
