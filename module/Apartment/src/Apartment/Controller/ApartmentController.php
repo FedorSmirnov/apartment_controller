@@ -8,6 +8,7 @@ use Apartment\Model\Apartment;
 use Apartment\Form\ApartmentForm;
 use Apartment\Model\Room;
 use Zend\Session\Container;
+use Apartment\SharedFunc\SharedFunctions;
 
 class ApartmentController extends AbstractActionController {
 	protected $apartmentTable;
@@ -30,11 +31,8 @@ class ApartmentController extends AbstractActionController {
 		) );
 	}
 	public function logoutAction() {
-		
-		// Die Session Variablen loeschen und zurueck zum Login
-		$user_session = new Container ( 'user_status' );
-		$user_session->getManager ()->getStorage ()->clear ( 'user_status' );
-		$this->redirect ()->toRoute ( 'login' );
+		$sf = new SharedFunctions ();
+		$sf->logOut ( $this );
 	}
 	public function addAction() {
 		$form = new ApartmentForm ();
