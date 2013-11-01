@@ -11,7 +11,8 @@ return array (
 						'Apartment\Controller\Apartment' => 'Apartment\Controller\ApartmentController',
 						'Apartment\Controller\Login' => 'Apartment\Controller\LoginController',
 						'Apartment\Controller\Enter' => 'Apartment\Controller\EnterController',
-						'Apartment\Controller\EnterLoc' => 'Apartment\Controller\EnterLocController' 
+						'Apartment\Controller\EnterLoc' => 'Apartment\Controller\EnterLocController',
+						'Apartment\Controller\RoomLoc' => 'Apartment\Controller\RoomLocController' 
 				) 
 		),
 		'view_manager' => array (
@@ -98,14 +99,33 @@ return array (
 												'controller' => 'Apartment\Controller\EnterLoc',
 												'action' => 'index' 
 										) 
-								)
-								 
+								) 
+						),
+						
+						'room-loc' => array (
+								
+								'type' => 'segment',
+								'options' => array (
+										
+										'route' => '/room-loc/:apartment/:room[/:action]',
+										'constraints' => array (
+												
+												'apartment' => '[0-9]+',
+												'room' => '[a-zA-Z][a-zA-Z0-9-_]*',
+												'action' => '[a-zA-Z][a-zA-Z0-9-_]*' 
+										),
+										
+										'defaults' => array (
+												
+												'controller' => 'Apartment\Controller\RoomLoc',
+												'action' => 'index' 
+										) 
+								) 
 						)
 						 
 				)
 				 
-		)
-		 
+		) 
 )
 ;
 
