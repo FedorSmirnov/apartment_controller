@@ -58,7 +58,8 @@
 			$.ajax({
 
 				type:"POST",
-				url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
+				// url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
+				url:"/enter/toggleLight",
 				data:myData,
 				success:function(data){
 
@@ -92,7 +93,8 @@
 			
 			$.ajax({
 					type:"POST",
-					url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allLightsOut",
+					// url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allLightsOut",
+					url:"/enter/allLightsOut",
 					data:myData,
 					success:function(data){
 
@@ -141,7 +143,8 @@
 			$.ajax({
 
 				type:"POST",
-				url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/changeTemp",
+				// url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/changeTemp",
+				url:"/enter/changeTemp",
 				data:myData,
 				success:function(data){
 
@@ -180,7 +183,8 @@
 			$.ajax({
 
 				type:"POST",
-				url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allTempOff",
+				// url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allTempOff",
+				url:"/enter/allTempOff",
 				data:myData,
 				success:function(data){
 					
