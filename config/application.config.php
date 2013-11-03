@@ -7,8 +7,7 @@ return array (
 				'AlbumRest',
 				'ApartmentRest',
 				'Album' 
-		// 'ApartManager',
-		// 'StickyNotes'
+		
 				),
 		
 		// These are various options for the listeners attached to the ModuleManager
