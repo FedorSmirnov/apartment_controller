@@ -13,7 +13,7 @@ class LoginController extends AbstractActionController {
 		
 		if ($request->isPost ()) {
 			
-			$subName = $_POST ['login'];
+			$subName = $request->getPost('login', null);
 			
 			// Auslesen des Namen, der vom User eingegeben wird
 			$name = $request->getPost ( 'name', null );
