@@ -40,7 +40,7 @@ class Apartment implements InputFilterAwareInterface {
 		if (! empty ( $data ['power'] )) {
 			$this->power = $data ['power'];
 		} else {
-			$data ['power'] = null;
+			$this->power = null;
 		}
 	}
 	public function getArrayCopy() {
