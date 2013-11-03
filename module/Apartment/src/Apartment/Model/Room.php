@@ -29,9 +29,7 @@ class Room {
 		if ($this->temperature == null) {
 			$this->temperature = 0;
 		}
-		if ($this->power_temperature == null) {
-			$this->power_temperature = 0;
-		}
+		
 		if ($this->temperature_outside == null) {
 			$this->temperature_outside = 0;
 		}
