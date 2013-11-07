@@ -58,8 +58,8 @@
 			$.ajax({
 
 				type:"POST",
-				 url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
-			//	url:"/enter/toggleLight",
+			//	 url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
+				url:"/enter/toggleLight",
 				data:myData,
 				success:function(data){
 
@@ -231,6 +231,8 @@
 
 <?php
 $title = "Die Wohnung Nummer " . $apartment->id;
+
+$admin = 'true';
 
 $this->headTitle ( $title );
 
