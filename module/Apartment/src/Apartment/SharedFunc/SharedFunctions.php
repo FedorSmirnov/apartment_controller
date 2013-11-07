@@ -3,6 +3,7 @@
 namespace Apartment\SharedFunc;
 
 use Zend\Session\Container;
+use ZfcUser\Controller\UserController;
 
 class SharedFunctions {
 	public function logOut($controller) {
@@ -12,6 +13,15 @@ class SharedFunctions {
 		$user_session->getManager ()->getStorage ()->clear ( 'user_status' );
 		
 		$controller->redirect ()->toRoute ( 'login' );
+	}
+	public function logOutZfcUser($controller) {
+		
+		// clear the session container
+		$session = new Container ( 'session_data' );
+		$session->getManager ()->getStorage ()->clear ( 'session_data' );
+		
+		// logout using the zfcUser function
+		$controller->redirect ()->toRoute ( 'zfcuser/logout' );
 	}
 }
 
