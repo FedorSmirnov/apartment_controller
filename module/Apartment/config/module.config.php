@@ -12,7 +12,8 @@ return array (
 						'Apartment\Controller\Login' => 'Apartment\Controller\LoginController',
 						'Apartment\Controller\Enter' => 'Apartment\Controller\EnterController',
 						'Apartment\Controller\EnterLoc' => 'Apartment\Controller\EnterLocController',
-						'Apartment\Controller\RoomLoc' => 'Apartment\Controller\RoomLocController' 
+						'Apartment\Controller\RoomLoc' => 'Apartment\Controller\RoomLocController',
+						'Apartment\Controller\Login2' => 'Apartment\Controller\Login2Controller' 
 				) 
 		),
 		'view_manager' => array (
@@ -121,12 +122,37 @@ return array (
 												'action' => 'index' 
 										) 
 								) 
+						),
+						
+						'zfcuser' => array (
+								'type' => 'literal',
+								'priority' => 1000,
+								'options' => array (
+										'route' => '/user',
+										'defaults' => array (
+												'controller' => 'Apartment\Controller\Login2',
+												'action' => 'index'
+										)
+								),
+								'may_terminate' => true,
+								'child_routes' => array (
+						
+										'login' => array (
+												'type' => 'Literal',
+												'options' => array (
+														'route' => '/login',
+														'defaults' => array (
+																'controller' => 'Apartment\Controller\Login2',
+																'action' => 'login'
+														)
+												)
+										)
+								)
+									
 						)
 						 
-				)
-				 
+				) 
 		) 
-)
-;
+);
 
 ?>
