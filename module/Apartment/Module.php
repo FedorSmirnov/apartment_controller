@@ -10,6 +10,9 @@ use Apartment\Model\UserTable;
 use Apartment\Model\User;
 use Apartment\Model\RoomTable;
 use Apartment\Model\Room;
+use Zend\EventManager\Event;
+use Zend\Form\Form;
+use Zend\Form\Element;
 
 class Module {
 	public function getAutoloaderConfig() {
@@ -75,6 +78,41 @@ class Module {
 						} 
 				) 
 		);
+	}
+	
+	// This function reacts to the init() of the zfcuser form and is used to alter it
+	public function onBootstrap($e) {
+		$events = $e->getApplication ()->getEventManager ()->getSharedManager ();
+		
+		$events->attach ( 'ZfcUser\Form\Login', 'init', function ($e) {
+			
+			$form = $e->getTarget ();
+			
+			// Adjust the label of the pw field
+			$pwelement = $form->get('credential');
+			$pwelement->setLabel('Passwort');
+			
+			// Remove the sign in button
+			$form->remove('submit');
+			
+			// Add the buttons for the room- and function-based views
+			$submitElementFunc = new Element\Button('functional');
+			$submitElementRoom = new Element\Button('room');
+			
+			$submitElementFunc->setLabel('Funktionale Sicht');
+			$submitElementFunc->setAttribute('type', 'submit');
+			$submitElementFunc->setAttribute('value', 'functional');
+			
+			$submitElementRoom->setLabel('Raumbasierte Sicht');
+			$submitElementRoom->setAttribute('type', 'submit');
+			$submitElementRoom->setAttribute('value', 'room');
+			
+			$form->add($submitElementFunc);
+			$form->add($submitElementRoom);
+			
+			
+			
+		} );
 	}
 }
 
