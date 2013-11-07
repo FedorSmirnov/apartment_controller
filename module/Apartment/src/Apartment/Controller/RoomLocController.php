@@ -16,23 +16,27 @@ class RoomLocController extends AbstractActionController {
 		$ap_id = $this->params ()->fromRoute ( 'apartment', 0 );
 		$room_name = $this->params ()->fromRoute ( 'room', '' );
 		
-		// Holen und Ueberpruefen der Session Variablen
-		$user_session = new Container ( 'user_status' );
-		$logged = $user_session->logged;
-		$admin = $user_session->admin;
-		
-		// Rausschmeissen wenn nicht eingeloggt
-		if ($logged != "zimmerbasiert") {
-			$this->redirect ()->toRoute ( 'login' );
+		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+			$this->redirect ()->toRoute ( 'zfcuser' );
 		}
 		
-		// Wenn nicht admin und in der falschen Wohnung auch raus
-		if ($admin != "true") {
-			$apartment_id = $user_session->apartment_id;
-			if ($apartment_id != $ap_id) {
-				$this->redirect ()->toRoute ( 'login' );
-			}
-		}
+		// // Holen und Ueberpruefen der Session Variablen
+		// $user_session = new Container ( 'user_status' );
+		// $logged = $user_session->logged;
+		// $admin = $user_session->admin;
+		
+		// // Rausschmeissen wenn nicht eingeloggt
+		// if ($logged != "zimmerbasiert") {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
+		
+		// // Wenn nicht admin und in der falschen Wohnung auch raus
+		// if ($admin != "true") {
+		// $apartment_id = $user_session->apartment_id;
+		// if ($apartment_id != $ap_id) {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
+		// }
 		
 		// Besetzen der Variablen, die an den View uebergeben werden
 		
@@ -49,7 +53,7 @@ class RoomLocController extends AbstractActionController {
 	}
 	public function logoutAction() {
 		$sf = new SharedFunctions ();
-		$sf->logOut ( $this );
+		$sf->logOutZfcUser ( $this );
 	}
 	public function getApartmentTable() {
 		if (! $this->apartmentTable) {

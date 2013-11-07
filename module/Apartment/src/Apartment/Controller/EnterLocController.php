@@ -14,23 +14,27 @@ class EnterLocController extends AbstractActionController {
 	public function indexAction() {
 		$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
 		
-		// Holen und Ueberpruefen der Session Variablen
-		$user_session = new Container ( 'user_status' );
-		$logged = $user_session->logged;
-		$admin = $user_session->admin;
-		
-		// Rausschmeissen wenn nicht eingeloggt
-		if ($logged != "zimmerbasiert") {
-			$this->redirect ()->toRoute ( 'login' );
+		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+			$this->redirect ()->toRoute ( 'zfcuser' );
 		}
 		
-		// Wenn nicht admin und in der falschen Wohnung auch raus
-		if ($admin != "true") {
-			$apartment_id = $user_session->apartment_id;
-			if ($apartment_id != $id) {
-				$this->redirect ()->toRoute ( 'login' );
-			}
-		}
+		// // Holen und Ueberpruefen der Session Variablen
+		// $user_session = new Container ( 'user_status' );
+		// $logged = $user_session->logged;
+		// $admin = $user_session->admin;
+		
+		// // Rausschmeissen wenn nicht eingeloggt
+		// if ($logged != "zimmerbasiert") {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
+		
+		// // Wenn nicht admin und in der falschen Wohnung auch raus
+		// if ($admin != "true") {
+		// $apartment_id = $user_session->apartment_id;
+		// if ($apartment_id != $id) {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
+		// }
 		
 		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		$rooms = $this->getRoomTable ()->getApartmentRooms ( $apartment->id );
@@ -47,7 +51,7 @@ class EnterLocController extends AbstractActionController {
 	public function logoutAction() {
 		$sf = new SharedFunctions ();
 		
-		$sf->logOut ( $this );
+		$sf->logOutZfcUser ( $this );
 	}
 	public function getApartmentTable() {
 		if (! $this->apartmentTable) {

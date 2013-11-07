@@ -14,35 +14,39 @@ class EnterController extends AbstractActionController {
 	public function indexAction() {
 		$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
 		
-		// Holen der Session variablen und ueberpruefen des User Status
-		$user_session = new Container ( 'user_status' );
-		$logged = $user_session->logged;
-		$admin = $user_session->admin;
-		
-		// Rausschmeissen wenn nicht eingeloggt
-		if ($logged != "funktional") {
-			$this->redirect ()->toRoute ( 'login' );
+		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+			$this->redirect ()->toRoute ( 'zfcuser' );
 		}
 		
-		// Wenn nicht admin und in der falschen Wohnung auch raus
-		if ($admin != "true") {
-			$apartment_id = $user_session->apartment_id;
-			if ($apartment_id != $id) {
-				$this->redirect ()->toRoute ( 'login' );
-			}
-		}
+		// // Holen der Session variablen und ueberpruefen des User Status
+		// $user_session = new Container ( 'user_status' );
+		// $logged = $user_session->logged;
+		// $admin = $user_session->admin;
+		
+		// // Rausschmeissen wenn nicht eingeloggt
+		// if ($logged != "funktional") {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
+		
+		// // Wenn nicht admin und in der falschen Wohnung auch raus
+		// if ($admin != "true") {
+		// $apartment_id = $user_session->apartment_id;
+		// if ($apartment_id != $id) {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
+		// }
 		
 		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		$vars = array (
 				'apartment' => $apartment,
 				'rooms' => $this->getRoomTable ()->getApartmentRooms ( $apartment->id ),
-				'admin' => $admin 
+				//'admin' => $admin 
 		);
 		return new ViewModel ( $vars );
 	}
 	public function logoutAction() {
 		$sf = new SharedFunctions ();
-		$sf->logOut ( $this );
+		$sf->logOutZfcUser ( $this );
 	}
 	public function getApartmentTable() {
 		if (! $this->apartmentTable) {
@@ -117,15 +121,13 @@ class EnterController extends AbstractActionController {
 		$apartment->power = $apartment->power + $powerSum;
 		$this->getApartmentTable ()->saveApartment ( $apartment );
 		
-		
-		
 		$result = new JsonModel ( array (
 				
 				'button' => $button,
 				'status' => $status,
 				'power_sum' => $powerSum,
 				'power_apartment' => $apartment->power,
-				'room_power_sum' => $room->getPowerSum() 
+				'room_power_sum' => $room->getPowerSum () 
 		) );
 		
 		return $result;
@@ -205,7 +207,7 @@ class EnterController extends AbstractActionController {
 				'gesamtverbrauch' => $apartment->power,
 				'tempverbrauch_zimmer' => $verbrauch,
 				'tempverbrauch_wohnung' => $this->updateTempPower ( $id ),
-				'room_power_sum' => $room->getPowerSum()
+				'room_power_sum' => $room->getPowerSum () 
 		) );
 		
 		return $result;
