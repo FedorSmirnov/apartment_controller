@@ -14,25 +14,37 @@ class ApartmentController extends AbstractActionController {
 	protected $apartmentTable;
 	protected $roomTable;
 	public function indexAction() {
-		
-		// Bauen des Containers und überprüfen der Session Einstellungen
-		$user_session = new Container ( 'user_status' );
-		$logged = $user_session->logged;
-		$admin = $user_session->admin;
-		
-		if ($logged == "false" || $admin != "true") {
-			$this->redirect ()->toRoute ( 'login' );
+		if ($this->zfcUserAuthentication ()->hasIdentity ()) {
+			
+			$user = $this->zfcUserAuthentication ()->getIdentity ();
+			$state = $user->getState ();
+			
+			if ($state == 2) {
+				
+				return new ViewModel ( 
+
+				array (
+						'apartments' => $this->getApartmentTable ()->fetchAll () 
+				) );
+			} else {
+				$this->redirect ()->toRoute ( 'apartment', array('action' => 'logout') );
+			}
+		} else {
+			$this->redirect ()->toRoute ( 'apartment', array('action' => 'logout') );
 		}
 		
-		return new ViewModel ( 
-
-		array (
-				'apartments' => $this->getApartmentTable ()->fetchAll () 
-		) );
+		// Bauen des Containers und überprüfen der Session Einstellungen
+		// $user_session = new Container ( 'user_status' );
+		// $logged = $user_session->logged;
+		// $admin = $user_session->admin;
+		
+		// if ($logged == "false" || $admin != "true") {
+		// $this->redirect ()->toRoute ( 'login' );
+		// }
 	}
 	public function logoutAction() {
 		$sf = new SharedFunctions ();
-		$sf->logOut ( $this );
+		$sf->logOutZfcUser ( $this );
 	}
 	public function addAction() {
 		$form = new ApartmentForm ();
