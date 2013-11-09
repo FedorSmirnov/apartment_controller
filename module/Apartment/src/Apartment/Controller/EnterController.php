@@ -129,7 +129,8 @@ class EnterController extends AbstractActionController {
 				'status' => $status,
 				'power_sum' => $powerSum,
 				'power_apartment' => $apartment->power,
-				'room_power_sum' => $room->getPowerSum () 
+				'room_power_sum' => $room->getPowerSum (),
+				'room_name' => $name 
 		) );
 		
 		return $result;
