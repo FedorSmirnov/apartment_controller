@@ -14,13 +14,11 @@ class ApartmentController extends AbstractActionController {
 	protected $apartmentTable;
 	protected $roomTable;
 	public function indexAction() {
+		$sf = new SharedFunctions ();
 		
-		$sf = new SharedFunctions();
-		
-		if ($sf->checkUserLogin($this)) {
+		if ($sf->checkUserLogin ( $this )) {
 			
-			
-			if ($sf->checkAdminUserLogin($this)) {
+			if ($sf->checkAdminUserLogin ( $this )) {
 				
 				return new ViewModel ( 
 
@@ -28,10 +26,14 @@ class ApartmentController extends AbstractActionController {
 						'apartments' => $this->getApartmentTable ()->fetchAll () 
 				) );
 			} else {
-				$this->redirect ()->toRoute ( 'apartment', array('action' => 'logout') );
+				$this->redirect ()->toRoute ( 'apartment', array (
+						'action' => 'logout' 
+				) );
 			}
 		} else {
-			$this->redirect ()->toRoute ( 'apartment', array('action' => 'logout') );
+			$this->redirect ()->toRoute ( 'apartment', array (
+					'action' => 'logout' 
+			) );
 		}
 		
 		// Bauen des Containers und überprüfen der Session Einstellungen
@@ -108,7 +110,7 @@ class ApartmentController extends AbstractActionController {
 		if (! $this->apartmentTable) {
 			
 			$sm = $this->getServiceLocator ();
-			$this->apartmentTable = $sm->get ( 'Apartment\Model\ApartmentTable' );
+			$this->apartmentTable = $sm->get ( 'Apartment\Service\ApartmentTable' );
 		}
 		
 		return $this->apartmentTable;
@@ -117,7 +119,7 @@ class ApartmentController extends AbstractActionController {
 		if (! $this->roomTable) {
 			
 			$sm = $this->getServiceLocator ();
-			$this->roomTable = $sm->get ( 'Apartment\Model\RoomTable' );
+			$this->roomTable = $sm->get ( 'Apartment\Service\RoomTable' );
 		}
 		
 		return $this->roomTable;

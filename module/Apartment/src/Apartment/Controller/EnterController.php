@@ -52,7 +52,7 @@ class EnterController extends AbstractActionController {
 		if (! $this->apartmentTable) {
 			
 			$sm = $this->getServiceLocator ();
-			$this->apartmentTable = $sm->get ( 'Apartment\Model\ApartmentTable' );
+			$this->apartmentTable = $sm->get ( 'Apartment\Service\ApartmentTable' );
 		}
 		
 		return $this->apartmentTable;
@@ -61,7 +61,7 @@ class EnterController extends AbstractActionController {
 		if (! $this->roomTable) {
 			
 			$sm = $this->getServiceLocator ();
-			$this->roomTable = $sm->get ( 'Apartment\Model\RoomTable' );
+			$this->roomTable = $sm->get ( 'Apartment\Service\RoomTable' );
 		}
 		
 		return $this->roomTable;

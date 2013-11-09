@@ -1,6 +1,6 @@
 <?php
 
-namespace Apartment\Model;
+namespace Apartment\Entity;
 
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Apartment\Model;
+namespace Apartment\Service;
 
 use Zend\Db\TableGateway\TableGateway;
 

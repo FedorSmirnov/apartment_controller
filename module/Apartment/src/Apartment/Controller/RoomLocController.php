@@ -5,8 +5,8 @@ namespace Apartment\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
-use Apartment\Model\RoomTable;
-use Apartment\Model\ApartmentTable;
+use Apartment\Service\RoomTable;
+use Apartment\Service\ApartmentTable;
 use Apartment\SharedFunc\SharedFunctions;
 
 class RoomLocController extends AbstractActionController {
@@ -59,7 +59,7 @@ class RoomLocController extends AbstractActionController {
 		if (! $this->apartmentTable) {
 			
 			$sm = $this->getServiceLocator ();
-			$this->apartmentTable = $sm->get ( 'Apartment\Model\ApartmentTable' );
+			$this->apartmentTable = $sm->get ( 'Apartment\Service\ApartmentTable' );
 		}
 		
 		return $this->apartmentTable;
@@ -67,7 +67,7 @@ class RoomLocController extends AbstractActionController {
 	public function getRoomTable() {
 		if (! $this->roomTable) {
 			$sm = $this->getServiceLocator ();
-			$this->roomTable = $sm->get ( 'Apartment\Model\RoomTable' );
+			$this->roomTable = $sm->get ( 'Apartment\Service\RoomTable' );
 		}
 		
 		return $this->roomTable;

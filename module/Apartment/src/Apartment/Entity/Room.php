@@ -1,6 +1,6 @@
 <?php
 
-namespace Apartment\Model;
+namespace Apartment\Entity;
 
 class Room {
 	public $apartment_id;

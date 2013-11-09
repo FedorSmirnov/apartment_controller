@@ -5,6 +5,7 @@ namespace Apartment\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
+use Apartment\Service\UserTable;
 
 class LoginController extends AbstractActionController {
 	protected $userTable;
@@ -73,7 +74,7 @@ class LoginController extends AbstractActionController {
 		if (! $this->userTable) {
 			
 			$sm = $this->getServiceLocator ();
-			$this->userTable = $sm->get ( 'Apartment\Model\UserTable' );
+			$this->userTable = $sm->get ( 'Apartment\Service\UserTable' );
 		}
 		
 		return $this->userTable;
