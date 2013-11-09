@@ -4,9 +4,9 @@ namespace Apartment\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Apartment\Model\Apartment;
+use Apartment\Entity\Apartment;
 use Apartment\Form\ApartmentForm;
-use Apartment\Model\Room;
+use Apartment\Entity\Room;
 use Zend\Session\Container;
 use Apartment\SharedFunc\SharedFunctions;
 
