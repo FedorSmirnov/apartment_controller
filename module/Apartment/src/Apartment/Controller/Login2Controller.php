@@ -23,12 +23,12 @@ class Login2Controller extends UserController {
 				if ($session->type == 'functional') {
 					
 					$this->redirect ()->toRoute ( 'enter', array (
-							'id' => 26 
+							'id' => 28 
 					) );
 				} elseif ($session->type == 'room') {
 					
 					$this->redirect ()->toRoute ( 'enter-loc', array (
-							'id' => 26 
+							'id' => 28 
 					) );
 				}
 			}
