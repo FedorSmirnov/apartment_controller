@@ -5,14 +5,15 @@ namespace Apartment\Controller;
 use ZfcUser\Controller\UserController;
 use Zend\Session\Container;
 use Zend\View\Helper\ViewModel;
+use Apartment\SharedFunc\SharedFunctions;
 
 class Login2Controller extends UserController {
 	public function indexAction() {
-		if ($this->zfcUserAuthentication ()->hasIdentity ()) {
+		$sf = new SharedFunctions ();
+		
+		if ($sf->checkUserLogin ( $this )) {
 			
-			$user = $this->zfcUserAuthentication ()->getIdentity ();
-			$state = $user->getState ();
-			if ($state == 2) {
+			if ($sf->checkAdminUserLogin ( $this )) {
 				// State 2 means admin state
 				return $this->redirect ()->toRoute ( 'apartment' );
 			} else {
@@ -37,7 +38,9 @@ class Login2Controller extends UserController {
 		}
 	}
 	public function loginAction() {
-		if ($this->zfcUserAuthentication ()->getAuthService ()->hasIdentity () && $this->zfcUserAuthenticate ()->getIdentity ()->getState () == 1) {
+		$sf = new SharedFunctions ();
+		
+		if ($sf->checkUserLogin ( $this )) {
 			
 			return $this->redirect ()->toRoute ( $this->getOptions ()->getLoginRedirectRoute () );
 		}
