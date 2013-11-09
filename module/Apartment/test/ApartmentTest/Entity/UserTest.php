@@ -1,8 +1,8 @@
 <?php
 
-namespace ApartmentTest\Model;
+namespace ApartmentTest\Entity;
 
-use Apartment\Model\User;
+use Apartment\Entity\User;
 
 /**
  * Test class for User.
