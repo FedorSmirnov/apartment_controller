@@ -232,8 +232,6 @@
 <?php
 $title = "Die Wohnung Nummer " . $apartment->id;
 
-$admin = 'true';
-
 $this->headTitle ( $title );
 
 ?>
@@ -488,16 +486,9 @@ $this->headTitle ( $title );
 
 	<br>
 	<hr>
-	<?php
-	
-	if ($admin == "true") {
-		
-		echo '<a style="float: left"
-		href=' . $this->url ( 'apartment' ) . '>Zurueck zur Uebersicht</a>';
-	}
-	?>
-	
-	
+
+
+
 
 	<a style="float: right"
 		href=<?php echo $this->url('enter', array('action' => 'logout'))?>>Ausloggen</a>

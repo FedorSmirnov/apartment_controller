@@ -43,7 +43,7 @@ class EnterLocController extends AbstractActionController {
 				
 				'apartment' => $apartment,
 				'rooms' => $rooms,
-				'admin' => $admin 
+				
 		);
 		
 		return new ViewModel ( $vars );
