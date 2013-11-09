@@ -3,6 +3,7 @@
 namespace Apartment\Service;
 
 use Zend\Db\TableGateway\TableGateway;
+use Apartment\Entity\User;
 
 class UserTable extends TableGateway {
 	protected $tableGateway;
