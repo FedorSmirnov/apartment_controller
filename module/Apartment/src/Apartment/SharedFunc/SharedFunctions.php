@@ -23,6 +23,18 @@ class SharedFunctions {
 		// logout using the zfcUser function
 		$controller->redirect ()->toRoute ( 'zfcuser/logout' );
 	}
+	public function checkUserLogin($controller) {
+		return $controller->zfcUserAuthentication ()->hasIdentity ();
+	}
+	public function checkAdminUserLogin($controller) {
+		$user = $controller->zfcUserAuthentication ()->getIdentity ();
+		$state = $user->getState ();
+		if ($state == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 ?>
