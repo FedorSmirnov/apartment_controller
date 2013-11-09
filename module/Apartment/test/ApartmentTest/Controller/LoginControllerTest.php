@@ -4,7 +4,7 @@ namespace ApartmentTest\Controller;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\Session\Container;
-use Apartment\Model\User;
+use Apartment\Entity\User;
 
 class LoginControllerTest extends AbstractHttpControllerTestCase {
 	protected $traceError = true;
