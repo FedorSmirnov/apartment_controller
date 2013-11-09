@@ -14,7 +14,9 @@ class EnterController extends AbstractActionController {
 	public function indexAction() {
 		$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
 		
-		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+		$sf = new SharedFunctions ();
+		
+		if (! $sf->checkUserLogin ( $this )) {
 			$this->redirect ()->toRoute ( 'zfcuser' );
 		}
 		
@@ -39,9 +41,9 @@ class EnterController extends AbstractActionController {
 		$apartment = $this->getApartmentTable ()->getApartment ( $id );
 		$vars = array (
 				'apartment' => $apartment,
-				'rooms' => $this->getRoomTable ()->getApartmentRooms ( $apartment->id ),
-				//'admin' => $admin 
-		);
+				'rooms' => $this->getRoomTable ()->getApartmentRooms ( $apartment->id ) 
+		// 'admin' => $admin
+				);
 		return new ViewModel ( $vars );
 	}
 	public function logoutAction() {

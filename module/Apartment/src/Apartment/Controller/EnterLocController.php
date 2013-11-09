@@ -14,7 +14,9 @@ class EnterLocController extends AbstractActionController {
 	public function indexAction() {
 		$id = ( int ) $this->params ()->fromRoute ( 'id', 0 );
 		
-		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+		$sf = new SharedFunctions();
+		
+		if (! $sf->checkUserLogin($this)) {
 			$this->redirect ()->toRoute ( 'zfcuser' );
 		}
 		

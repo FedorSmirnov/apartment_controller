@@ -16,7 +16,9 @@ class RoomLocController extends AbstractActionController {
 		$ap_id = $this->params ()->fromRoute ( 'apartment', 0 );
 		$room_name = $this->params ()->fromRoute ( 'room', '' );
 		
-		if (! $this->zfcUserAuthentication ()->hasIdentity ()) {
+		$sf = new SharedFunctions ();
+		
+		if (! $sf->checkUserLogin ( $this )) {
 			$this->redirect ()->toRoute ( 'zfcuser' );
 		}
 		
