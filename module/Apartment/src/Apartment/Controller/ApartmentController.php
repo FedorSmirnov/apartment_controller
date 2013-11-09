@@ -14,12 +14,13 @@ class ApartmentController extends AbstractActionController {
 	protected $apartmentTable;
 	protected $roomTable;
 	public function indexAction() {
-		if ($this->zfcUserAuthentication ()->hasIdentity ()) {
+		
+		$sf = new SharedFunctions();
+		
+		if ($sf->checkUserLogin($this)) {
 			
-			$user = $this->zfcUserAuthentication ()->getIdentity ();
-			$state = $user->getState ();
 			
-			if ($state == 2) {
+			if ($sf->checkAdminUserLogin($this)) {
 				
 				return new ViewModel ( 
 
