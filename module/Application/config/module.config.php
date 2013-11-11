@@ -14,7 +14,7 @@ return array (
 								'options' => array (
 										'route' => '/',
 										'defaults' => array (
-												'controller' => 'Application\Controller\Index',
+												'controller' => 'Apartment\Controller\Login2',
 												'action' => 'index' 
 										) 
 								) 
