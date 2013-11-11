@@ -26,8 +26,7 @@ $(document).ready(function(){
 			$.ajax({
 
 				type:"POST",
-				 url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
-			//	url:"http://zf2-tutorial.localhost/enter/toggleLight",
+				url:"<?php echo $this->basePath();?>/enter/toggleLight",
 				data:myData,
 				success:function(data){
 					
@@ -77,8 +76,7 @@ $(document).ready(function(){
 		$.ajax({
 
 			type:"POST",
-			 url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/changeTemp",
-		//	url:"/enter/changeTemp",
+			url:"<?php echo $this->basePath();?>/enter/changeTemp",
 			data:myData,
 			success:function(data){
 
@@ -202,15 +200,17 @@ $this->headTitle ( $title );
 
 
 	<hr>
-
+	
 	<a style="float: left;"
 		href=<?php echo $this->url('enter-loc', array('id' => $apartment->id));?>>Zurueck
 		zur Wohnungsuebersicht</a>
+		
+		
+<br>
 
-	<a style="float: right"
-		href=<?php echo $this->url('room-loc', array('apartment' => $apartment->id, 'room'=>$room->name, 'action'=>'logout'))?>>Ausloggen</a>
 
-	<br>
+
+
 
 
 </body>
