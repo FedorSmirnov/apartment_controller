@@ -44,6 +44,7 @@ td,th {
 	bottom: 150px;
 	right: 450px;
 }
+}
 </style>
 
 
@@ -65,9 +66,13 @@ td,th {
 
 			var table_sel = "#tabelle" + index;
 			var button_sel = "#button_table_" + index;
+			var div_sel = "#div_dropdown_" + index;
 
 			//Toggeln der Tabelle
-			$(table_sel).toggle();
+			
+			
+			
+			$(div_sel).toggle();
 
 			//Ändern des Knopftexts
 			$(button_sel).text(function(i, oldText) {
@@ -102,8 +107,7 @@ td,th {
 			$.ajax({
 
 				type:"POST",
-			//	 url: "http://hiwi.jochen-bauer.net/ehcTest/public/enter/toggleLight",
-				url:"/enter/toggleLight",
+				url: "<?php echo $this->basePath();?>/enter/toggleLight",
 				data:myData,
 				success:function(data){
 
@@ -121,27 +125,27 @@ td,th {
 						
 						if(data.status == "An"){
 							
-						$("#img_light_kitchen").attr("src", "/img/gluehbirne_an.png");
+						$("#img_light_kitchen").attr("src", "<?php echo $this->basePath();?>/img/gluehbirne_an.png");
 						}else{
-						$("#img_light_kitchen").attr("src", "/img/gluehbirne_aus.png");
+						$("#img_light_kitchen").attr("src", "<?php echo $this->basePath();?>/img/gluehbirne_aus.png");
 						}
 						break;
 
 					case "Bad":
 						if(data.status == "An"){
 							
-						$("#img_light_bathroom").attr("src", "/img/gluehbirne_an.png");
+						$("#img_light_bathroom").attr("src", "<?php echo $this->basePath();?>/img/gluehbirne_an.png");
 						}else{
-						$("#img_light_bathroom").attr("src", "/img/gluehbirne_aus.png");
+						$("#img_light_bathroom").attr("src", "<?php echo $this->basePath();?>/img/gluehbirne_aus.png");
 						}
 						break;
 
 					case "Zimmer_1":
 						if(data.status == "An"){
 							
-						$("#img_light_living").attr("src", "/img/gluehbirne_an.png" );
+						$("#img_light_living").attr("src", "<?php echo $this->basePath();?>/img/gluehbirne_an.png" );
 						}else{
-						$("#img_light_living").attr("src", "/img/gluehbirne_aus.png" );
+						$("#img_light_living").attr("src", "<?php echo $this->basePath();?>/img/gluehbirne_aus.png" );
 						}
 						break;
 
@@ -170,8 +174,7 @@ td,th {
 			
 			$.ajax({
 					type:"POST",
-					 url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allLightsOut",
-				//	url:"/enter/allLightsOut",
+					url:"<?php echo $this->basePath();?>/enter/allLightsOut",
 					data:myData,
 					success:function(data){
 
@@ -183,6 +186,10 @@ td,th {
 						$("#text_power_sum_light").text("0");
 						// Gesamtverbrauch anpassen
 						$("#text_apartment_power").text(data.gesamtverbrauch);
+
+						// Change all pictures to the off light
+						$('.img_light').attr('src', '<?php echo $this->basePath();?>/img/gluehbirne_aus.png');
+						
 						
 
 						},
@@ -220,8 +227,7 @@ td,th {
 			$.ajax({
 
 				type:"POST",
-				 url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/changeTemp",
-			//	url:"/enter/changeTemp",
+				url:"<?php echo $this->basePath();?>/enter/changeTemp",
 				data:myData,
 				success:function(data){
 
@@ -260,8 +266,7 @@ td,th {
 			$.ajax({
 
 				type:"POST",
-				 url:"http://hiwi.jochen-bauer.net/ehcTest/public/enter/allTempOff",
-			//	url:"/enter/allTempOff",
+				url:"<?php echo $this->basePath();?>/enter/allTempOff",
 				data:myData,
 				success:function(data){
 					
@@ -311,6 +316,14 @@ td,th {
 <?php
 $title = "Die Wohnung Nummer " . $apartment->id;
 
+if ($rooms == null) {
+	throw new \Exception ( "No rooms given to the view" );
+}
+
+if ($apartment == null) {
+	throw new \Exception ( "No apartment given to the view" );
+}
+
 $this->headTitle ( $title );
 
 // Determine which state the lights represented by the pictures are in
@@ -343,53 +356,6 @@ foreach ( $rooms as $room ) {
 	<h1>
 		<?php echo $this->escapeHtml($title);?>
 	</h1>
-	<hr>
-
-	<div id="container">
-
-		<div id="background">
-			<img alt="apartment_picture"
-				src="http://ehcserver.jochen-bauer.net/img/ehome-center-header.jpg">
-		</div>
-
-
-
-		<div id="light_kitchen" class="light">
-			<img id="img_light_kitchen" alt="gluehbirne_aus"
-				src=<?php
-				if ($light_kitchen) {
-					echo $this->basePath ( 'img/gluehbirne_an.png' );
-				} else {
-					echo $this->basePath ( 'img/gluehbirne_aus.png' );
-				}
-				?>>
-		</div>
-
-		<div id="light_bathroom" class="light">
-			<img id="img_light_bathroom" alt="gluehbirne_aus"
-				src=<?php
-				
-				if ($light_bath) {
-					echo $this->basePath ( 'img/gluehbirne_an.png' );
-				} else {
-					echo $this->basePath ( 'img/gluehbirne_aus.png' );
-				}
-				?>>
-		</div>
-
-		<div id="light_living" class="light">
-			<img id="img_light_living" alt="gluehbirne_aus"
-				src=<?php
-				
-				if ($light_living) {
-					echo "'" . $this->basePath ( 'img/gluehbirne_an.png' ) . "'";
-				} else {
-					echo "'" . $this->basePath ( 'img/gluehbirne_aus.png' ) . "'";
-				}
-				?>>
-		</div>
-
-	</div>
 
 	<hr>
 
@@ -402,24 +368,24 @@ foreach ( $rooms as $room ) {
 
 
 
-
-	<table id="tabelle0" hidden="true">
-		</tr>
-		<tr>
-			<td>Adresse:</td>
-			<td>
+	<div class="div_dropdown" id="div_dropdown_0" hidden="true">
+		<table id="tabelle0">
+			</tr>
+			<tr>
+				<td>Adresse:</td>
+				<td>
 				<?php echo $this->escapeHtml($apartment->adress)?>
 			</td>
-		</tr>
-		<tr>
-			<td>Stockwerk:</td>
-			<td>
+			</tr>
+			<tr>
+				<td>Stockwerk:</td>
+				<td>
 				<?php echo $this->escapeHtml($apartment->floor)?>
 			</td>
-		</tr>
-		<tr>
-			<td>Gesamtverbrauch:</td>
-			<td id="text_apartment_power">
+			</tr>
+			<tr>
+				<td>Gesamtverbrauch:</td>
+				<td id="text_apartment_power">
 				<?php
 				
 				if ($apartment->power == 0) {
@@ -430,11 +396,12 @@ foreach ( $rooms as $room ) {
 				}
 				?>
 			</td>
-		</tr>
+			</tr>
 
 
 
-	</table>
+		</table>
+	</div>
 
 	<hr>
 
@@ -445,10 +412,58 @@ foreach ( $rooms as $room ) {
 		<button type="button" id="button_table_1" class="button_dropdown">+</button>
 	</h3>
 
-	<table id="tabelle1" hidden="true">
+	<div class="div_dropdown" id="div_dropdown_1" hidden="true">
 
-		<tr>
-			<td>Gesamtverbrauch</td>
+		<div id="container">
+
+			<div id="background">
+				<img alt="apartment_picture"
+					src=<?php echo $this->basePath('img/praterstr3.jpg')?>>
+			</div>
+
+
+
+			<div id="light_kitchen" class="light">
+				<img class="img_light" id="img_light_kitchen" alt="gluehbirne_aus"
+					src=<?php
+					if ($light_kitchen) {
+						echo $this->basePath ( 'img/gluehbirne_an.png' );
+					} else {
+						echo $this->basePath ( 'img/gluehbirne_aus.png' );
+					}
+					?>>
+			</div>
+
+			<div id="light_bathroom" class="light">
+				<img class="img_light" id="img_light_bathroom" alt="gluehbirne_aus"
+					src=<?php
+					
+					if ($light_bath) {
+						echo $this->basePath ( 'img/gluehbirne_an.png' );
+					} else {
+						echo $this->basePath ( 'img/gluehbirne_aus.png' );
+					}
+					?>>
+			</div>
+
+			<div id="light_living" class="light">
+				<img class="img_light" id="img_light_living" alt="gluehbirne_aus"
+					src=<?php
+					
+					if ($light_living) {
+						echo "'" . $this->basePath ( 'img/gluehbirne_an.png' ) . "'";
+					} else {
+						echo "'" . $this->basePath ( 'img/gluehbirne_aus.png' ) . "'";
+					}
+					?>>
+			</div>
+
+		</div>
+
+		<table id="tabelle1">
+
+			<tr>
+				<td>Gesamtverbrauch</td>
 			<?php
 			
 			// Ausrechnen des Gesamtlichtverbrauchs
@@ -461,16 +476,16 @@ foreach ( $rooms as $room ) {
 			
 			?>
 			<td id="text_power_sum_light"><?php echo $powerSum?></td>
-			<td><button id="button_lightsout_all">Alle Lichter Ausschalten</button></td>
+				<td><button id="button_lightsout_all">Alle Lichter Ausschalten</button></td>
 
-		</tr>
+			</tr>
 
-		<tr>
+			<tr>
 
-			<th>Zimmer</th>
-			<th>Licht</th>
+				<th>Zimmer</th>
+				<th>Licht</th>
 
-		</tr>
+			</tr>
 
 		<?php
 		$counter = - 1;
@@ -484,8 +499,8 @@ foreach ( $rooms as $room ) {
 
 		<tr>
 
-			<td class="room_name_light"
-				id=<?php echo "room_name_light_" . $counter?>><?php echo $this->escapeHtml($room->name);?>
+				<td class="room_name_light"
+					id=<?php echo "room_name_light_" . $counter?>><?php echo $this->escapeHtml($room->name);?>
 			</td>
 
 			<?php
@@ -503,15 +518,16 @@ foreach ( $rooms as $room ) {
 
 			<td class="status_light" id=<?php echo "status_light_" . $counter?>><?php echo $light;?></td>
 
-			<td><button class="button_light"
-					id=<?php echo "button_light_" . $counter?>>
+				<td><button class="button_light"
+						id=<?php echo "button_light_" . $counter?>>
 					<?php echo $button;?></button></td>
 
-		</tr>
+			</tr>
 
 		<?php endforeach;?>
 
 	</table>
+	</div>
 
 	<hr>
 
@@ -522,11 +538,12 @@ foreach ( $rooms as $room ) {
 		<button type="button" id="button_table_2" class="button_dropdown">+</button>
 	</h3>
 
-	<table id="tabelle2" hidden=true>
+	<div class="div_dropdown" id="div_dropdown_2" hidden="true">
+		<table id="tabelle2">
 
-		<tr>
+			<tr>
 
-			<td>Gesamtverbrauch</td>
+				<td>Gesamtverbrauch</td>
 			<?php
 			// erechnen des gesamtVerbrauchs der Heizung
 			$sum = 0;
@@ -537,20 +554,20 @@ foreach ( $rooms as $room ) {
 			
 			?>
 			<td id="text_temp_gesamt"><?php echo $sum?></td>
-			<td id="button_temp_all_off"><button>Alle Heizungen/Klimaanlagen
-					ausschalten</button></td>
+				<td id="button_temp_all_off"><button>Alle Heizungen/Klimaanlagen
+						ausschalten</button></td>
 
-		</tr>
+			</tr>
 
-		<tr>
+			<tr>
 
-			<th>Zimmer</th>
-			<th>Solltemperatur</th>
-			<th>Aussentemperatur</th>
-			<th>Energieverbrauch</th>
+				<th>Zimmer</th>
+				<th>Solltemperatur</th>
+				<th>Aussentemperatur</th>
+				<th>Energieverbrauch</th>
 
 
-		</tr>
+			</tr>
 
 		<?php
 		$counter = - 1;
@@ -561,29 +578,29 @@ foreach ( $rooms as $room ) {
 		
 		<tr>
 
-			<td id=<?php echo "temp_name_" . $counter?>>
+				<td id=<?php echo "temp_name_" . $counter?>>
 				<?php echo $this->escapeHtml($room->name);?>
 			</td>
-			<td id=<?php echo "temp_soll_" . $counter?> class="temp_soll">
+				<td id=<?php echo "temp_soll_" . $counter?> class="temp_soll">
 				<?php echo $room->temperature?>
 			</td>
-			<td id=<?php echo "temp_aussen_" . $counter?> class="temp_aussen">
+				<td id=<?php echo "temp_aussen_" . $counter?> class="temp_aussen">
 				<?php echo $room->temperature_outside?>
 			</td>
-			<!-- Energieverbrauch -->
-			<td class="temp_verbrauch"
-				id=<?php echo "temp_verbrauch_" . $counter?>><?php
+				<!-- Energieverbrauch -->
+				<td class="temp_verbrauch"
+					id=<?php echo "temp_verbrauch_" . $counter?>><?php
 			
 			echo $room->power_temperature;
 			
 			?></td>
-			<td>Solltemperatur: <input type="number"
-				value=<?php echo $room->temperature;?>
-				id=<?php echo "temp_input_" . $counter?>></td>
-			<td><button class="set_temperature"
-					id=<?php echo "temp_button_".$counter?>>Einstellen</button></td>
+				<td>Solltemperatur: <input type="number"
+					value=<?php echo $room->temperature;?>
+					id=<?php echo "temp_input_" . $counter?>></td>
+				<td><button class="set_temperature"
+						id=<?php echo "temp_button_".$counter?>>Einstellen</button></td>
 
-		</tr>
+			</tr>
 
 
 
@@ -592,6 +609,7 @@ foreach ( $rooms as $room ) {
 
 
 	</table>
+	</div>
 
 
 
@@ -602,49 +620,41 @@ foreach ( $rooms as $room ) {
 		<button id="button_table_3" class="button_dropdown">+</button>
 	</h3>
 
-	<table id="tabelle3" hidden=true>
+	<div class="div_dropdown" id="div_dropdown_3" hidden="true">
+		<table id="tabelle3">
 
-		<tr>
+			<tr>
 
-			<td>Gesamtverbrauch</td>
-			<td>0</td>
-			<td><button>Alle Geraete ausschalten</button></td>
+				<td>Gesamtverbrauch</td>
+				<td>0</td>
+				<td><button>Alle Geraete ausschalten</button></td>
 
-		</tr>
+			</tr>
 
-		<tr>
+			<tr>
 
-			<th>Zimmer</th>
-			<th>Verbrauch der Geraete</th>
-		</tr>
+				<th>Zimmer</th>
+				<th>Verbrauch der Geraete</th>
+			</tr>
 
 		<?php foreach ($rooms as $room):?>
 
 		<tr>
 
-			<td>
+				<td>
 				<?php echo $this->escapeHtml($room->name);?>
 			</td>
-			<td>0</td>
-			<td><button>Betreten</button></td>
+				<td>0</td>
+				<td><button>Betreten</button></td>
 
 
-		</tr>
+			</tr>
 
 
 		<?php endforeach;?>
 
 	</table>
-
-	<br>
-	<hr>
-
-
-
-
-	<a style="float: right"
-		href=<?php echo $this->url('enter', array('action' => 'logout'))?>>Ausloggen</a>
-	<br>
+	</div>
 
 
 </body>
