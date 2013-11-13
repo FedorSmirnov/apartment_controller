@@ -110,6 +110,48 @@ class Module {
 			$form->add ( $submitElementFunc );
 			$form->add ( $submitElementRoom );
 		} );
+		
+		// Adjust the changeEmail form
+		
+		$events->attach ( 'ZfcUser\Form\ChangeEmail', 'init', function ($e) {
+			
+			$form = $e->getTarget ();
+			
+			// Adjust the label for 'new email'
+			$nEmailElement = $form->get ( 'newIdentity' );
+			$nEmailElement->setLabel ( 'Neue Email:' );
+			
+			// Adjust the label for 'verify new email'
+			$verify = $form->get ( 'newIdentityVerify' );
+			$verify->setLabel ( 'Neue Email bestaetigen:' );
+			
+			// Adjust the label for 'password'
+			$pwElement = $form->get ( 'credential' );
+			$pwElement->setLabel ( 'Passwort' );
+		} );
+		
+		// Adjust the changePassword form
+		
+		$events->attach ( 'ZfcUser\Form\ChangePassword', 'init', function ($e) {
+			
+			$form = $e->getTarget ();
+			
+			// Adjust the label for 'current password'
+			$cpElement = $form->get ( 'credential' );
+			$cpElement->setLabel ( 'Aktuelles Passwort:' );
+			
+			// Adjust the label for 'new password'
+			$npElement = $form->get ( 'newCredential' );
+			$npElement->setLabel ( 'Neues Passwort:' );
+			
+			// Adjust the label for 'verify new password'
+			$vnpElement = $form->get ( 'newCredentialVerify' );
+			$vnpElement->setLabel ( 'Neues Passwort bestaetigen:' );
+			
+			// Adjust the label for the submit button
+			$sbElement = $form->get ( 'submit' );
+			$sbElement->setValue ( 'Passwort aendern' );
+		} );
 	}
 }
 
