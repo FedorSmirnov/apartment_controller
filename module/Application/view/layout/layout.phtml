@@ -39,8 +39,9 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-						<li><a href="<?php echo $this->url('zfcuser') ?>">Profil</a></li>
-						<li><a href="<?php echo $this->url('enter', array('action' => 'logout'));?>">Logout</a></li>
+						<li><a id="profile_link" href="<?php echo $this->url('profile') ?>">Profil</a></li>
+						<li><a id="logout_link" href="<?php echo $this->url('enter', array('action' => 'logout'));?>">Logout</a></li>
+						<li><a href=<?php echo $this->url('buttons');?>>Elementsammlung</a></li>
 						<!--  <li><a href="<?php // echo $this->url('utilities') ?>">[Utilities]</a></li> -->
 						<!--        <li><a id="temp" href="<?php // echo $this->url('temp') ?>">[Temp]</a></li> -->
 					</ul>
