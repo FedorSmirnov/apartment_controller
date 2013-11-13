@@ -1,0 +1,60 @@
+<html>
+
+<head>
+
+<style>
+td,th {
+	padding: 10px;
+	text-align: left;
+}
+</style>
+
+</head>
+
+
+<body>
+
+	<h1>Profildaten</h1>
+
+	<hr>
+
+	<table>
+
+
+		<tr>
+			<th>Adresse:</th>
+			<td><?php echo $apartment->adress;?></td>
+		</tr>
+
+		<tr>
+			<th>Stockwerk:</th>
+			<td><?php echo $apartment->floor;?></td>
+		</tr>
+
+		<tr>
+			<th>Name:</th>
+			<td><?php echo $user->getUserName();?></td>
+		</tr>
+
+		<tr>
+			<th>Email:</th>
+			<td><?php echo $user->getEmail();?></td>
+		</tr>
+
+	</table>
+
+	<hr>
+
+	<button>
+		<a href=<?php echo $this->url('zfcuser/changeemail');?>>Email aendern</a>
+	</button>
+	
+	<br><br>
+	
+	<button><a href=<?php echo $this->url('zfcuser/changepassword');?>>Passwort aendern</a></button>
+
+
+
+</body>
+
+</html>
