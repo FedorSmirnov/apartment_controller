@@ -26,6 +26,9 @@ class SharedFunctions {
 	public function checkUserLogin($controller) {
 		return $controller->zfcUserAuthentication ()->hasIdentity ();
 	}
+	public function getUser($controller){
+		return $controller->zfcUserAuthentication()->getIdentity();
+	}
 	public function checkAdminUserLogin($controller) {
 		$user = $controller->zfcUserAuthentication ()->getIdentity ();
 		$state = $user->getState ();
