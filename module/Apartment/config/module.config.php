@@ -13,7 +13,9 @@ return array (
 						'Apartment\Controller\Enter' => 'Apartment\Controller\EnterController',
 						'Apartment\Controller\EnterLoc' => 'Apartment\Controller\EnterLocController',
 						'Apartment\Controller\RoomLoc' => 'Apartment\Controller\RoomLocController',
-						'Apartment\Controller\Login2' => 'Apartment\Controller\Login2Controller' 
+						'Apartment\Controller\Login2' => 'Apartment\Controller\Login2Controller',
+						'Apartment\Controller\Buttons' => 'Apartment\Controller\ButtonsController',
+						'Apartment\Controller\Profile' => 'Apartment\Controller\ProfileController' 
 				) 
 		),
 		'view_manager' => array (
@@ -131,27 +133,61 @@ return array (
 										'route' => '/user',
 										'defaults' => array (
 												'controller' => 'Apartment\Controller\Login2',
-												'action' => 'index'
-										)
+												'action' => 'index' 
+										) 
 								),
 								'may_terminate' => true,
 								'child_routes' => array (
-						
+										
 										'login' => array (
 												'type' => 'Literal',
 												'options' => array (
 														'route' => '/login',
 														'defaults' => array (
 																'controller' => 'Apartment\Controller\Login2',
-																'action' => 'login'
-														)
-												)
-										)
-								)
-									
+																'action' => 'login' 
+														) 
+												) 
+										) 
+								) 
+						)
+						,
+						
+						'buttons' => array (
+								
+								'type' => 'literal',
+								'priority' => 1000,
+								'options' => array (
+										
+										'route' => '/buttons',
+										'defaults' => array (
+												
+												'controller' => 'Apartment\Controller\Buttons',
+												'action' => 'index' 
+										) 
+								),
+								'may_terminate' => true 
+						)
+						,
+						
+						'profile' => array (
+								
+								'type' => 'literal',
+								'priority' => 1000,
+								'options' => array (
+										
+										'route' => '/profile',
+										'defaults' => array (
+												
+												'controller' => 'Apartment\Controller\Profile',
+												'action' => 'index' 
+										) 
+								),
+								'may_terminate' => true 
 						)
 						 
-				) 
+				)
+				 
 		) 
 );
 
