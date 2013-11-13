@@ -1,3 +1,22 @@
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+<script>
+
+// Script to remove the links to the profile and the logout
+	$(document).ready(function(){
+
+		$('#profile_link').toggle();
+		$('#logout_link').toggle();
+
+
+		});
+
+</script>
+
+
 <h1><?php echo $this->translate('Einloggen'); ?></h1>
 
 <?php
@@ -24,12 +43,12 @@ $form->setAttribute ( 'method', 'post' );
         <?php endif ?>
         
         <br>
-        
-        <dd><?php echo $this->formButton($form->get('functional'))?></dd>
-        <br>
-         <dd><?php echo $this->formButton($form->get('room'))?></dd>
 
-       
+	<dd><?php echo $this->formButton($form->get('functional'))?></dd>
+	<br>
+	<dd><?php echo $this->formButton($form->get('room'))?></dd>
+
+
 </dl>
 
 <?php echo $this->form()->closeTag()?>
